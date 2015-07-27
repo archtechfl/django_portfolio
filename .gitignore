@@ -5,6 +5,10 @@ __pycache__/
 # C extensions
 *.so
 
+# Media
+
+media/
+
 # Distribution / packaging
 .Python
 env/
@@ -55,3 +59,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Settings
+local_settings.py
