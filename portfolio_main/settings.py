@@ -18,11 +18,6 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DJANGO_DEBUG']
-
-TEMPLATE_DEBUG = False
-
 ALLOWED_HOSTS = [
     'localhost',
     'limitless-citadel-2703.herokuapp.com',
@@ -70,7 +65,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 
 if DEVELOPMENT_ENVIRONMENT is True:
-    print "DEVELOPMENT"
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
+    TEMPLATE_DEBUG = True
     # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     STATIC_ROOT = os.path.join(DATA_DIR, 'static')
@@ -78,7 +75,8 @@ if DEVELOPMENT_ENVIRONMENT is True:
         os.path.join(BASE_DIR, 'portfolio_main', 'static'),
     )
 else:
-    print "PRODUCTION"
+    DEBUG = False
+    TEMPLATE_DEBUG = False
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     STATIC_ROOT = 'staticfiles'
     STATICFILES_DIRS = (
