@@ -23,7 +23,10 @@ DEBUG = os.environ['DJANGO_DEBUG']
 
 TEMPLATE_DEBUG = os.environ['TEMPLATE_DEBUG']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    'limitless-citadel-2703.herokuapp.com',
+]
 
 
 # Application definition
