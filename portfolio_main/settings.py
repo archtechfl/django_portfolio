@@ -19,9 +19,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-print os.environ['DJANGO_DEBUG']
+DEBUG = os.environ['DJANGO_DEBUG']
 
 TEMPLATE_DEBUG = False
 
@@ -71,7 +69,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 
-if DEVELOPMENT_ENVIRONMENT:
+if DEVELOPMENT_ENVIRONMENT is True:
     print "DEVELOPMENT"
     # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
