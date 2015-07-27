@@ -19,9 +19,9 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DJANGO_DEBUG']
+DEBUG = False
 
-TEMPLATE_DEBUG = os.environ['TEMPLATE_DEBUG']
+TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
