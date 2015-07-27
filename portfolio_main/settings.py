@@ -21,6 +21,8 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+print os.environ['DJANGO_DEBUG']
+
 TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = [
@@ -70,6 +72,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 
 if DEVELOPMENT_ENVIRONMENT:
+    print "DEVELOPMENT"
     # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     STATIC_ROOT = os.path.join(DATA_DIR, 'static')
@@ -77,6 +80,7 @@ if DEVELOPMENT_ENVIRONMENT:
         os.path.join(BASE_DIR, 'portfolio_main', 'static'),
     )
 else:
+    print "PRODUCTION"
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     STATIC_ROOT = 'staticfiles'
     STATICFILES_DIRS = (
