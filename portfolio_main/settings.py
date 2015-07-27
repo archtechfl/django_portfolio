@@ -1,5 +1,5 @@
 import os
-from .local_settings import DATABASE_SETTINGS, SECRET_KEY, DEBUG_STATUS, TEMPLATE_DEBUG
+import dj_database_url
 gettext = lambda s: s
 DATA_DIR = os.path.dirname(os.path.dirname(__file__))
 """
@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SECRET_KEY
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = DEBUG_STATUS
+DEBUG = os.environ['DJANGO_DEBUG']
 
-TEMPLATE_DEBUG = TEMPLATE_DEBUG
+TEMPLATE_DEBUG = os.environ['TEMPLATE_DEBUG']
 
 ALLOWED_HOSTS = []
 
@@ -173,7 +173,13 @@ CMS_PERMISSION = True
 
 CMS_PLACEHOLDER_CONF = {}
 
-DATABASES = DATABASE_SETTINGS
+DATABASES = {}
+
+# Parse database configuration from $DATABASE_URL
+DATABASES['default'] =  dj_database_url.config()
+
+# Enable Connection Pooling
+DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 MIGRATION_MODULES = {
     'djangocms_column': 'djangocms_column.migrations_django',
