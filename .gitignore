@@ -62,3 +62,7 @@ target/
 
 # Settings
 local_settings.py
+
+# Disk files
+.DS_Store
+._.DS_Store

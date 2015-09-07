@@ -19,22 +19,11 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ['DEBUG_STATUS']
 
-TEMPLATE_DEBUG = False
-
-ALLOWED_HOSTS = [
-    'localhost',
-    'limitless-citadel-2703.herokuapp.com',
-]
-
+TEMPLATE_DEBUG = os.environ['TEMPLATE_DEBUG']
 
 # Application definition
-
-
-
-
-
 ROOT_URLCONF = 'portfolio_main.urls'
 
 WSGI_APPLICATION = 'portfolio_main.wsgi.application'
@@ -63,7 +52,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 # Development and production file settings
-DEVELOPMENT_ENVIRONMENT = os.environ['DEVELOPMENT_ENVIRONMENT']
+DEVELOPMENT_ENVIRONMENT = True
+# DEVELOPMENT_ENVIRONMENT = os.environ['DEVELOPMENT_ENVIRONMENT']
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
@@ -76,6 +66,7 @@ if DEVELOPMENT_ENVIRONMENT:
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'portfolio_main', 'static'),
     )
+    ALLOWED_HOSTS = []
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     STATIC_ROOT = 'staticfiles'
@@ -83,6 +74,10 @@ else:
         os.path.join(BASE_DIR, 'static'),
     )
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+    ALLOWED_HOSTS = [
+        'localhost',
+        'limitless-citadel-2703.herokuapp.com',
+    ]
 SITE_ID = 1
 
 TEMPLATE_LOADERS = (
@@ -187,11 +182,24 @@ CMS_PLACEHOLDER_CONF = {}
 
 DATABASES = {}
 
-# Parse database configuration from $DATABASE_URL
-DATABASES['default'] =  dj_database_url.config()
-
-# Enable Connection Pooling
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
+# Parse database configuration from $DATABASE_URL if in production
+# otherwise, use standard development object listing
+if DEVELOPMENT_ENVIRONMENT:
+    DATABASES = {
+    'default':
+        {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': u'portfolio',
+            'HOST': u'localhost',
+            'USER': u'portfolio',
+            'PASSWORD': u'a3mwnvSGkjyyPtjgURsf',
+            'PORT': 5432
+        }
+    }
+else:
+    DATABASES['default'] =  dj_database_url.config()
+    # Enable Connection Pooling
+    DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 MIGRATION_MODULES = {
     'djangocms_column': 'djangocms_column.migrations_django',
